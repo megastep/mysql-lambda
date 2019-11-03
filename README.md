@@ -22,7 +22,6 @@ If you have a working Docker setup, you just need to enter `make` to build both 
 
 Note that the MySQL 8.0 variant takes considerably longer to build from source.
 
-
 ### Author
 
-[Stephane Peter](https://stephanepeter.com/) (@megastep) - [Sponsor me!](https://github.com/sponsors/megastep)
+[Stephane Peter](https://stephanepeter.com/) ([@megastep](https://github.com/megastep)) - [Sponsor me!](https://github.com/sponsors/megastep)
