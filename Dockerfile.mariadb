@@ -1,0 +1,10 @@
+FROM amazonlinux
+
+WORKDIR /root
+
+RUN yum -y update && yum install -y tar gzip which zip mariadb binutils
+RUN mkdir -p /opt/bin /opt/lib
+
+RUN cp /usr/bin/mysql* /usr/bin/aria_* /usr/bin/msql2mysql /usr/bin/my_print_defaults /opt/bin/
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /opt/lib/
+RUN cd /opt; strip bin/* lib/*; zip -9r /root/mariadb-layer.zip bin lib
