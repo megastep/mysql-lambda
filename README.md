@@ -7,7 +7,7 @@ This is useful for Lambda functions that need to run MySQL commands to quickly i
 The layers (in the form of zip files) are built in Docker using the official AmazonLinux image, to match the typicial Lambda runtime environment.
 
 - The MySQL layer is built from the official source (v8.0.18)
-- THe MariaDB layer is built from files in the official `mariadb` AmazonLinux package.
+- The MariaDB layer is built from the binary files in the current `mariadb` AmazonLinux package.
 
 ## Download
 
