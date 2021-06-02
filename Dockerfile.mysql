@@ -2,11 +2,11 @@ FROM amazonlinux
 
 WORKDIR /root
 
-ARG VERSION=8.0.18
+ARG VERSION=5.7.34
 
 RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip
 
-RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.gz
+RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-${VERSION}.tar.gz
 
 RUN tar xzf mysql-${VERSION}.tar.gz
 RUN cd mysql-${VERSION}; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install
