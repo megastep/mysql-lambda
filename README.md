@@ -47,5 +47,8 @@ We leave:
 
 We zip it up again. In the end, we would have a very small zip file containing at least `mysql` and `mysqldump`.
 
+## Releases
+https://github.com/asknicely/mysql-lambda/releases
+
 ## Fork
 This repo was forked from: https://github.com/megastep/mysql-lambda
