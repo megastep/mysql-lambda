@@ -1,4 +1,4 @@
-MYSQL_VERSION = 5.7.31
+MYSQL_VERSION = 5.7.34
 
 all: mysql-$(MYSQL_VERSION)-layer.zip mariadb-layer.zip
 

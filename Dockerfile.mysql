@@ -4,17 +4,18 @@ WORKDIR /root
 
 ARG VERSION=8.0.18
 
-RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip libatomic
+RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip unzip libatomic
 
 RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.gz
 
 RUN tar xzf mysql-${VERSION}.tar.gz
 RUN cd mysql-${VERSION}; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install
 
-RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libatomic.so.1.2.0 /opt/lib/
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libatomic.so.1.2.0 /usr/lib64/libatomic.so.1.2.0 /usr/lib64/libatomic.so.1 /opt/lib/
 RUN cd /opt; strip bin/* lib/*; rm lib/*.a;
 
 # Remove binaries that are too large that we don't need
-RUN cd /opt/bin; mv mysql mysqldump ..; rm *; mv ../mysql ../mysqldump .
+RUN cd /opt/bin; mv mysql mysqldump ..; rm *; cd ..; mv mysql mysqldump ./bin
+RUN cd /usr/bin; cp zip unzip /opt/bin
 
-RUN cd /opt; zip -9r /root/mysql-${VERSION}-layer.zip bin lib share
+RUN cd /opt; zip -9r /root/mysql-${VERSION}-layer.zip bin lib
