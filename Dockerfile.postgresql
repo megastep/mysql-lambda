@@ -1,0 +1,18 @@
+FROM amazonlinux
+
+WORKDIR /root
+
+ARG VERSION=9.2.24
+
+RUN yum -y update && yum install -y make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip
+
+RUN wget -q https://ftp.postgresql.org/pub/source/v${VERSION}/postgresql-${VERSION}.tar.gz
+
+RUN tar xzf postgresql-${VERSION}.tar.gz
+RUN cd postgresql-${VERSION}; ./configure --without-readline --prefix=/opt; make \
+    && make -C src/bin install \
+    && make -C src/include install \
+    && make -C src/interfaces install
+
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /opt/lib/
+RUN cd /opt; strip bin/* lib/*; rm lib/*.a; zip -9r /root/postgresql-${VERSION}-layer.zip bin lib share
