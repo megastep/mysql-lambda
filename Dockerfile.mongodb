@@ -1,0 +1,15 @@
+FROM amazonlinux
+
+WORKDIR /root
+
+ARG VERSION=100.4.0
+
+RUN yum -y update && yum install -y binutils gzip ncurses-devel tar wget zip
+
+RUN wget -q https://fastdl.mongodb.org/tools/db/mongodb-database-tools-amazon2-x86_64-${VERSION}.tgz
+RUN tar xzf mongodb-database-tools-amazon2-x86_64-${VERSION}.tgz
+
+RUN mkdir -p /opt/lib
+RUN cp -rp mongodb-database-tools-amazon2-x86_64-${VERSION}/bin /opt/
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /opt/lib/
+RUN cd /opt; strip bin/* lib/*; rm lib/*.a; zip -9r /root/mongodb-tools-${VERSION}-layer.zip bin lib
