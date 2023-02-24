@@ -6,7 +6,7 @@ This is useful for Lambda functions that need to run MySQL, PostgreSQL or MongoD
 
 The layers (in the form of zip files) are built in Docker using the official AmazonLinux image, to match the typicial Lambda runtime environment.
 
-- The MySQL layer is built from the official source (v8.0.18)
+- The MySQL layer is built from the official source (v8.0.32)
 - The MariaDB layer is built from the binary files in the current `mariadb` AmazonLinux package.
 - The PostgreSQL layer is built from the official source (v9.2.24)
 - The MongoDB Tools layer is built from the official source (v100.4.0)
