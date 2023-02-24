@@ -11,5 +11,5 @@ RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.g
 RUN tar xzf mysql-${VERSION}.tar.gz
 RUN cd mysql-${VERSION}; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install
 
-RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /opt/lib/
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libssl.so.1.1 /usr/lib64/libcrypto.so.1.1 /opt/lib/
 RUN cd /opt; strip bin/* lib/*; rm lib/*.a; zip -9r /root/mysql-${VERSION}-layer.zip bin lib share
