@@ -4,7 +4,7 @@ WORKDIR /root
 
 ARG VERSION=8.0.32
 
-RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip
+RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip unzip
 
 RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.gz
 
