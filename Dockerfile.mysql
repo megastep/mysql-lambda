@@ -2,16 +2,16 @@ FROM amazonlinux
 
 WORKDIR /root
 
-ARG VERSION=5.7.34
+ARG VERSION=8.0.32
 
-RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip unzip libatomic
+RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip
 
-RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-${VERSION}.tar.gz
+RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.gz
 
 RUN tar xzf mysql-${VERSION}.tar.gz
 RUN cd mysql-${VERSION}; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install
 
-RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libatomic.so.1.2.0 /usr/lib64/libatomic.so.1.2.0 /usr/lib64/libatomic.so.1 /opt/lib/
+RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libssl.so.1.1 /usr/lib64/libcrypto.so.1.1 /opt/lib/
 RUN cd /opt; strip bin/* lib/*; rm lib/*.a;
 
 # Remove binaries that are too large that we don't need
