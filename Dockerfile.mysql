@@ -18,4 +18,4 @@ RUN cd /opt; strip bin/* lib/*; rm lib/*.a;
 RUN cd /opt/bin; mv mysql mysqldump ..; rm *; cd ..; mv mysql mysqldump ./bin
 RUN cd /usr/bin; cp zip unzip /opt/bin
 
-RUN cd /opt; zip -9r /root/mysql-${VERSION}-layer.zip bin lib
+RUN cd /opt; zip -9ry /root/mysql-${VERSION}-layer.zip bin lib
