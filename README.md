@@ -1,8 +1,7 @@
 # About MySQL Layer for Ask Nicely
 We use this repo to build the MySQL Lambda Layer for our Ask Nicely Lambda app.
 
-At the moment this is locked to version `MySQL 5.7.34`. The same version number found in our SQL fixtures.
-
+At the moment this is locked to version `MySQL 8.0.32`.
 ## Prerequisites
 Running `gcc -v` in your CLI should at least return something. If not you would have to install Xcode + some CLI tools.
 
@@ -10,32 +9,54 @@ Running `gcc -v` in your CLI should at least return something. If not you would 
 Make sure you have Docker running then run `make mysql`.
 
 ```
-➜  mysql-lambda git:(master) ✗ make mysql
-docker build -f Dockerfile.mysql . -t mysql-layer --build-arg VERSION=5.7.34
-[+] Building 493.9s (12/12) FINISHED
- => [internal] load build definition from Dockerfile.mysql                                                                                                                              0.0s
- => => transferring dockerfile: 43B                                                                                                                                                     0.0s
- => [internal] load .dockerignore                                                                                                                                                       0.0s
- => => transferring context: 2B                                                                                                                                                         0.0s
- => [internal] load metadata for docker.io/library/amazonlinux:latest                                                                                                                   1.3s
- => [1/8] FROM docker.io/library/amazonlinux@sha256:06b9e2433e4e563e1d75bc8c71d32b76dc49a2841e9253746eefc8ca40b80b5e                                                                    0.0s
- => CACHED [2/8] WORKDIR /root                                                                                                                                                          0.0s
- => CACHED [3/8] RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip                                               0.0s
- => [4/8] RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.34.tar.gz                                                                                                 9.3s
- => [5/8] RUN tar xzf mysql-5.7.34.tar.gz                                                                                                                                               5.9s
- => [6/8] RUN cd mysql-5.7.34; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install          435.2s
- => [7/8] RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /opt/lib/                                                                                                          0.3s
- => [8/8] RUN cd /opt; strip bin/* lib/*; rm lib/*.a; zip -9r /root/mysql-5.7.34-layer.zip bin lib share                                                                               14.8s
- => exporting to image                                                                                                                                                                 26.9s
- => => exporting layers                                                                                                                                                                26.9s
- => => writing image sha256:e23cba24594542237f867922ad4ae75c0f677e1772c9c6ca86ff9ba803bed55e                                                                                            0.0s
- => => naming to docker.io/library/mysql-layer                                                                                                                                          0.0s
-
-Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
-docker container cp 2c17c0cc5cdcb6e7e9688d44d7dbabde75cdd1f7ea72f92909f62790b521ae2e:/root/mysql-5.7.34-layer.zip .
+david@MacBook-Pro mysql-lambda % make mysql                         
+docker build -f Dockerfile.mysql . -t mysql-layer --build-arg VERSION=8.0.32
+[+] Building 3.5s (15/15) FINISHED                                                                                                                                                                                                   
+ => [internal] load build definition from Dockerfile.mysql                                                                                                                                                                      0.0s
+ => => transferring dockerfile: 930B                                                                                                                                                                                            0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                               0.0s
+ => => transferring context: 2B                                                                                                                                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/amazonlinux:2                                                                                                                                                                3.4s
+ => [ 1/11] FROM docker.io/library/amazonlinux:2@sha256:4f39d87731b57d3be630f9877ab25c4f4cfa8adc3039592c8c00a14235cb2a2b                                                                                                        0.0s
+ => CACHED [ 2/11] WORKDIR /root                                                                                                                                                                                                0.0s
+ => CACHED [ 3/11] RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip unzip                                                                   0.0s
+ => CACHED [ 4/11] RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.32.tar.gz                                                                                                                                0.0s
+ => CACHED [ 5/11] RUN tar xzf mysql-8.0.32.tar.gz                                                                                                                                                                              0.0s
+ => CACHED [ 6/11] RUN cd mysql-8.0.32; mkdir build; cd build; cmake3 .. -DCMAKE_INSTALL_PREFIX=/opt -DWITHOUT_SERVER=ON -DDOWNLOAD_BOOST=ON -DWITH_BOOST=/root/boost && make install                                           0.0s
+ => CACHED [ 7/11] RUN cp /usr/lib64/libncurses.so.6 /usr/lib64/libtinfo.so.6 /usr/lib64/libssl.so.1.1 /usr/lib64/libcrypto.so.1.1 /opt/lib/                                                                                    0.0s
+ => CACHED [ 8/11] RUN cd /opt; strip bin/* lib/*; rm lib/*.a;                                                                                                                                                                  0.0s
+ => CACHED [ 9/11] RUN cd /opt/bin; mv mysql mysqldump ..; rm *; cd ..; mv mysql mysqldump ./bin                                                                                                                                0.0s
+ => CACHED [10/11] RUN cd /usr/bin; cp zip unzip /opt/bin                                                                                                                                                                       0.0s
+ => CACHED [11/11] RUN cd /opt; zip -9r /root/mysql-8.0.32-layer.zip bin lib                                                                                                                                                    0.0s
+ => exporting to image                                                                                                                                                                                                          0.0s
+ => => exporting layers                                                                                                                                                                                                         0.0s
+ => => writing image sha256:c80c78609c6bd09bb46145ffee6c086f7df09568b0c06d2147e8776128ade216                                                                                                                                    0.0s
+ => => naming to docker.io/library/mysql-layer                                                                                                                                                                                  0.0s
+docker container cp 1200023791b3d2e26b388ab915760cdfb2d7d4dd37c32a94b0f292e656b857d1:/root/mysql-8.0.32-layer.zip .
+                               Successfully copied 12.7MB to /Users/david/workspace/mysql-lambda/.
+david@MacBook-Pro mysql-lambda %
 ```
 
-In the same directory, you would end up with a zip file: `mysql-5.7.34-layer.zip`
+In the same directory, you should end up with a zip file: `mysql-8.0.32-layer.zip`
+
+## Known issues
+
+If you get these errors:
+```
+Unable to find image 'mysql-layer:latest' locally
+Error response from daemon: pull access denied for mysql-layer, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+```
+and these errors:
+```
+docker container cp :/root/mysql-8.0.32-layer.zip .                                                                                                                                                                                  
+must specify at least one container source                                                                                                                                                                                           
+make: *** [mysql-8.0.32-layer.zip] Error 1
+```
+
+Try running this before the `make mysql`:
+```
+docker container create mysql-layer
+```
 
 ## What to do after you have generated the zip file?
 Ideally, we should just upload that file as a Layer in AWS. Unfortunately, we are hitting some file size limits.
