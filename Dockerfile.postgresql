@@ -1,8 +1,8 @@
-FROM amazonlinux
+FROM amazonlinux:2
 
 WORKDIR /root
 
-ARG VERSION=9.2.24
+ARG VERSION=15.3
 
 RUN yum -y update && yum install -y make gcc-c++ ncurses-devel openssl-devel python-devel wget tar gzip which zip
 
