@@ -2,7 +2,7 @@ FROM amd64/amazonlinux:2
 
 WORKDIR /root
 
-ARG VERSION=8.0.32
+ARG VERSION=8.0.33
 
 RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip unzip
 
